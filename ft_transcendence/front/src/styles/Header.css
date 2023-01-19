@@ -1,0 +1,39 @@
+.Header {
+	width: 100vw;
+	height: 10vh;
+	background-color: rgb(0, 0, 0);
+	display: grid;
+	grid-template-columns: 16vw 17vw 34vw 17vw 16vw;
+	grid-template-rows: 10vh;
+	color: rgb(163, 0, 0);
+}
+
+.Header h1 {
+	font-size: 48px;
+}
+
+.Header h1:hover {
+	color: rgb(255, 255, 255);
+	cursor: pointer;
+}
+
+.Header a, .Header p:not(.Settings p) {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font-family: inherit;
+	cursor: pointer;
+	outline: inherit;
+	text-decoration: none;
+}
+
+.Header a:hover, .Header p:not(.Settings p):hover {
+	color: rgb(255, 255, 255);
+	cursor: pointer;
+}
+
+  
+.chat, .watch, .settings, .logout {
+	font-size: 34px;
+} 

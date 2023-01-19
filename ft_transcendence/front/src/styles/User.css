@@ -1,0 +1,122 @@
+.User {
+	width: 70vw;
+	height: 50vw;
+	max-width: 1000px;
+	max-height: 750px;
+	background-color: white;
+	margin: auto;
+	margin-bottom: 50px;
+	display: grid;
+	grid-template-columns: 33% 34% 33%;
+	grid-template-rows: 20% 30% 10% 40%;
+	grid-template-areas:
+	'header header header'
+	'left-top center-top right-top'
+	'left center right'
+	'left-bottom center-bottom right-bottom';
+	grid-auto-rows: auto;
+	margin-top: 50px;
+	font-family: sans-serif;
+	align-items: center;
+	border-radius: 10%;
+}
+
+.avatar, .stats, .friends, .requested_friends, .match_history {
+	padding-bottom: 20%;
+}
+
+h3 {
+	grid-area: header;
+	font-size: 32px;
+}
+
+.avatar {
+	grid-area: left;
+}
+
+.stats {
+	grid-area: center-top;
+}
+
+.friends {
+	grid-area: right;
+}
+
+.requested_friends {
+	grid-area: right-top;
+}
+
+.match_history {
+	grid-area: center-bottom;
+}
+
+.User ul {
+	padding: 0;
+	height: 100px;
+	overflow-y: scroll;
+}
+
+.User li {
+	margin-bottom: 5px;
+	list-style-type: none;
+}
+
+.User ul::-webkit-scrollbar {
+	display: none;
+}
+
+.otherUser_buttons {
+	grid-area: right;
+	justify-content: center;
+}
+
+.avatar_label {
+	cursor: pointer;
+}
+.avatar_label:hover {
+	color: grey;
+}
+
+.avatar_button {
+	display: none;
+}
+
+.win, .lose, .tie , .ratio{
+	font-size: 20px;
+}
+
+.win {
+	color: green;
+}
+
+.lose {
+	color: red;
+}
+
+.tie {
+	color: orange;
+}
+
+.ratio {
+	color: blue;
+}
+
+.friends a {
+	text-decoration: none;
+}
+
+.friends a ul {
+	padding: 0;
+}
+
+.online {
+	color: green;
+}
+
+.offline {
+	color: red;
+}
+
+.inGame {
+	color: orange;
+}

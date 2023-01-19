@@ -1,0 +1,65 @@
+#https://www.educative.io/blog/docker-compose-tutorial
+#https://docs.docker.com/compose/compose-file/#links   ===> See right margin for keywords
+
+version: "3.3" #https://docs.docker.com/compose/compose-file/compose-file-v3/     VERIFIER VERSION SUR LA VM !
+services: #The different services/containers we want to import
+
+  nginx: #first one is nginx
+    build: requirements/nginx/ #Goes there to find the corresponding Dockerfile for this container
+    image: nginx #The personalyzed name we give to the image (to check)inside the container
+    container_name: nginx #The personalyzed name we give to the container (to check)
+    ports:
+      - 443:443 #Subjct says : "Votre container NGINX doit être le seul point d’entrée de votre infrastructure par le port 443 uniquement"
+    volumes: #https://docs.docker.com/compose/compose-file/#volumes     (as if we insert a usb key : a usb key is an accessible volume)
+      - "wordpress-volume:/var/www/html/wordpress" 
+    networks: #networks defines the networks that service containers are attached to, referencing entries under the top-level networks key.
+     - my_parent_network #The custom name i give to my network. Here they are all on the same. Only 1 level.
+    depends_on:
+      - wordpress #Here, this service execution depends on the fact that wordpress will be imported first. Nginx will wait for it to be imported and then import itself.https://docs.docker.com/compose/compose-file/#links
+    restart: unless-stopped #The policy restarts a container irrespective of the exit code but will stop restarting when the service is stopped or removed.
+
+  wordpress :
+    build : requirements/wordpress/
+    image : wordpress
+    container_name : wordpress
+    env_file : ./.env #https://docs.docker.com/compose/compose-file/#env_file
+    ports : #https://docs.docker.com/compose/compose-file/#ports
+      - '9000'
+    volumes :
+      - "wordpress-volume:/var/www/html/wordpress"
+    networks :
+      - my_parent_network
+    depends_on :
+      - mariadb
+    restart: unless-stopped
+
+  mariadb :
+    build : requirements/mariadb/
+    image : mariadb
+    container_name : mariadb
+    env_file : ./.env
+    ports :
+      - '3306'
+    volumes :
+      - "mariadb-volume:/var/lib/mysql"
+    networks :
+      - my_parent_network
+    restart: unless-stopped
+
+networks :
+  my_parent_network:
+    driver : bridge #A bridge driver can be used to create an internal network within a single Docker host. : https://techmormo.com/posts/docker-networking-6-bridge-driver/#:~:text=What%20is%20the%20bridge%20driver,isolated%20from%20the%20host's%20network.
+    
+volumes :
+  wordpress-volume :
+    driver : local
+    driver_opts :
+      type : none
+      o : bind
+      device : /home/cjullien/data/wordpress
+  mariadb-volume :
+    driver : local
+    driver_opts :
+      type : none
+      o : bind
+      device : /home/cjullien/data/mariadb
